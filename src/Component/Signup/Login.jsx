@@ -24,7 +24,10 @@ export default function Login() {
     try {
       const response = await axios.post(`https://samarpan-qm-backend-1.onrender.com/api/${role}/login`, {
         email,
-        password,
+        password},
+        {
+  withCredentials: true
+
       });
 
       // Set success message after login
