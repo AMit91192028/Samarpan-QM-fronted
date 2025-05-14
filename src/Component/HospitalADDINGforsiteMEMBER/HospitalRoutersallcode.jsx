@@ -27,7 +27,7 @@ const HospitalDashboard = () => {
   const fetchHospitals = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:4001/api/hospitals/hospitalData");
+      const res = await axios.get("https://samarpan-qm-backend-1.onrender.com/api/hospitals/hospitalData");
       setHospitals(res.data);
     } catch (err) {
       toast.error("Failed to load hospitals");
@@ -60,7 +60,7 @@ const HospitalDashboard = () => {
       data.append("contactNumber", contact);
         data.append("image", images[0]);
       
-      await axios.post("http://localhost:4001/api/hospitals/add", data);
+      await axios.post("https://samarpan-qm-backend.vercel.app/api/hospitals/add", data);
       toast.success("Hospital added successfully");
       fetchHospitals();
       setFormData({ name: "", address: "", contact: "", images: [] });
@@ -129,7 +129,7 @@ const handleUpdate = async (e) => {
         return;
       }
     try {
-      await axios.post(`http://localhost:4001/api/hospitals/add-doctor`, doctorData);
+      await axios.post(`https://samarpan-qm-backend.vercel.app/api/hospitals/add-doctor`, doctorData);
       toast.success("Doctor added");
       fetchHospitals();
       setDoctorData({ hospitalId: "", doctorId: "" });
@@ -176,7 +176,7 @@ const handleUpdate = async (e) => {
             {currentHospitals.map((h) => (
               <div key={h._id} className="border p-4 rounded shadow">
                   <img
-                    src={`http://localhost:4001/image/uploads/${h.image}`}
+                    src={`https://samarpan-qm-backend.vercel.app/image/uploads/${h.image}`}
                     alt="hospital"
                     className="w-full h-32 object-cover mb-2 rounded"
                   />

@@ -63,9 +63,9 @@ const OTPVerification = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:4001/api/${role}/verify-otp`,
+        `https://samarpan-qm-backend-1.onrender.com/api/${role}/verify-otp`,
         { email, otp: fullOtp },
-        { withCredentials: true }  // Ensures cookies are sent
+        { withCredentials: true } 
       );
 
       alert(response.data.message);
@@ -88,7 +88,7 @@ const OTPVerification = () => {
   const handleResend = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4001/api/${role}/resend-otp`,
+        `https://samarpan-qm-backend-1.onrender.com/api/${role}/resend-otp`,
         { email, role },
         { withCredentials: true }
       );

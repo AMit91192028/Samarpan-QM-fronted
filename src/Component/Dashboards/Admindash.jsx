@@ -20,6 +20,7 @@ export default function AdminDash() {
   const [showAppointments, setShowAppointments] = useState(false);
   const [totalAppointments, setTotalAppointments] = useState(0); // New state for total appointments
   const [adminId,setadminId]=useState("")
+  const[name,setName]=useState("");
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -27,9 +28,10 @@ export default function AdminDash() {
     if(token){
       const decoded=jwtDecode(token);
       // console.log(decoded);
-      if(decoded && decoded.adminId){
+      if(decoded && decoded.adminId && decoded.Name){
         console.log(decoded.adminId)
         setadminId(decoded.adminId);
+        setName(decoded.Name)
       }
     }
    else{
@@ -40,7 +42,7 @@ export default function AdminDash() {
     const fetchAdminData = async () => {
       try {
         const response = await axios.post(
-          'http://localhost:4001/api/admin/getAdminData',
+          'https://samarpan-qm-backend-1.onrender.com/api/admin/getAdminData',
           {},
           { withCredentials: true }
         );
@@ -62,7 +64,7 @@ export default function AdminDash() {
     const fetchDoctors = async () => {
       if (!hospitalId) return;
       try {
-        const res = await axios.post(`http://localhost:4001/api/doctors/hospital/${hospitalId}`, { withCredentials: true });
+        const res = await axios.post(`https://samarpan-qm-backend-1.onrender.com/api/doctors/hospital/${hospitalId}`, { withCredentials: true });
         setDoctorList(res.data.doctors || []);
         setTotalDoctor(res.data.doctors.length);
       } catch (err) {
@@ -73,7 +75,7 @@ export default function AdminDash() {
     const fetchAppointments = async () => {
       if (!hospitalId) return;
       try {
-        const res = await axios.get(`http://localhost:4001/api/admin/queues`, {
+        const res = await axios.get(`https://samarpan-qm-backend-1.onrender.com/api/admin/queues`, {
           params: { adminId: adminId }, // Send adminId as a query parameter
           withCredentials: true
         });
@@ -100,7 +102,7 @@ export default function AdminDash() {
 
   const handleDeleteDoctor = async (doctorId) => {
     try {
-      await axios.delete(`http://localhost:4001/api/doctors/${doctorId}`, { withCredentials: true });
+      await axios.delete(`https://samarpan-qm-backend-1.onrender.com/api/doctors/${doctorId}`, { withCredentials: true });
       const updatedList = doctorList.filter(doc => doc._id !== doctorId);
       setDoctorList(updatedList);
       setTotalDoctor(updatedList.length);
@@ -131,7 +133,7 @@ export default function AdminDash() {
 
   const AdminLogout = async () => {
     try {
-      await axios.post('http://localhost:4001/api/admin/logout', {}, { withCredentials: true });
+      await axios.post('https://samarpan-qm-backend-1.onrender.com/api/admin/logout', {}, { withCredentials: true });
       navigate('/');
     } catch (error) {
       console.error('Error logging out:', error.message);
@@ -172,7 +174,7 @@ export default function AdminDash() {
         <header className="flex justify-between items-center bg-white px-10 py-6 shadow-md border-b border-indigo-100 rounded-bl-3xl">
           <h2 className="text-2xl font-bold text-indigo-800">📊 Dashboard Overview</h2>
           <div className="flex items-center gap-4">
-            <span className="text-gray-600 italic">Hello, Admin</span>
+            <span className="text-gray-600 italic">Welcome, {name}</span>
             <img
               src="https://i.pravatar.cc/100"
               alt="Admin"
