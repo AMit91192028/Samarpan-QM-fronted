@@ -65,22 +65,20 @@ const OTPVerification = () => {
       const response = await axios.post(
         `https://samarpan-qm-backend-1.onrender.com/api/${role}/verify-otp`,
         { email, otp: fullOtp },
-        { withCredentials: true }
+        { withCredentials: true } 
       );
 
       alert(response.data.message);
 
-      // Ensure successful OTP verification before navigating
-      if (response.data.success) {
+      // Delay navigation to ensure cookie is set and wait for backend response
+      setTimeout(() => {
         // Redirect based on the role after OTP verification
         if (role === "admin") {
-          navigate("/admin", { replace: true });
+          navigate("/admin",{ replace: true });
         } else if (role === "user") {
-          navigate("/user", { replace: true });
+          navigate("/user",{ replace: true });
         }
-      } else {
-        alert("OTP verification failed. Please try again.");
-      }
+      }, 300);
     } catch (err) {
       alert(err.response?.data?.message || "Something went wrong");
     }
@@ -108,12 +106,12 @@ const OTPVerification = () => {
       .some((cookie) => cookie.trim().startsWith("token="));
     if (isLoggedIn) {
       if (role === "admin") {
-        navigate("/admin");
+        navigate("/admin",{replace:true});
       } else {
-        navigate("/user");
+        navigate("/user",{replace:true});
       }
     }
-  }, []);
+  }, [role,navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-purple-100 px-4">
