@@ -39,8 +39,14 @@ const Navbar = () => {
           <li className="py-2 hover:text-blue-600 transition">Services</li>
           <li className="py-2 hover:text-blue-600 transition">About</li>
           <li className="py-2 hover:text-blue-600 transition">Contact</li>
-          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">Sign Up</button>
-          <button className="mt-2 px-4 py-2 bg-gray-300 text-black rounded-lg shadow-md hover:bg-gray-400 transition">Login</button>
+          <Link to="/sign">
+              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+                Sign Up
+              </button>
+          </Link>
+          <Link to="/login">
+          <button className="px-4 py-2 bg-gray-300 text-black rounded-lg shadow-md hover:bg-gray-400 transition">Login</button>
+          </Link>
         </ul>
       )}
     </nav>

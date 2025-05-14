@@ -65,20 +65,22 @@ const OTPVerification = () => {
       const response = await axios.post(
         `https://samarpan-qm-backend-1.onrender.com/api/${role}/verify-otp`,
         { email, otp: fullOtp },
-        { withCredentials: true } 
+        { withCredentials: true }
       );
 
       alert(response.data.message);
 
-      // Delay navigation to ensure cookie is set and wait for backend response
-      setTimeout(() => {
+      // Ensure successful OTP verification before navigating
+      if (response.data.success) {
         // Redirect based on the role after OTP verification
         if (role === "admin") {
-          navigate("/admin");
+          navigate("/admin", { replace: true });
         } else if (role === "user") {
-          navigate("/user");
+          navigate("/user", { replace: true });
         }
-      }, 300);
+      } else {
+        alert("OTP verification failed. Please try again.");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Something went wrong");
     }
